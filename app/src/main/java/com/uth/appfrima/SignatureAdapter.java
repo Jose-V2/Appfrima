@@ -16,9 +16,15 @@ import java.util.List;
 public class SignatureAdapter extends RecyclerView.Adapter<SignatureAdapter.SignatureViewHolder> {
 
     private List<Signature> signatureList;
+    private OnItemLongClickListener longClickListener;
 
-    public SignatureAdapter(List<Signature> signatureList) {
+    public interface OnItemLongClickListener {
+        void onItemLongClick(Signature signature, int position);
+    }
+
+    public SignatureAdapter(List<Signature> signatureList, OnItemLongClickListener longClickListener) {
         this.signatureList = signatureList;
+        this.longClickListener = longClickListener;
     }
 
     @NonNull
@@ -40,6 +46,14 @@ public class SignatureAdapter extends RecyclerView.Adapter<SignatureAdapter.Sign
         } else {
             holder.imgSignature.setImageResource(android.R.drawable.ic_menu_gallery);
         }
+
+        holder.itemView.setOnLongClickListener(v -> {
+            if (longClickListener != null) {
+                longClickListener.onItemLongClick(signature, holder.getAdapterPosition());
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override

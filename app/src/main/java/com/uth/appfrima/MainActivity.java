@@ -9,9 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.appcompat.widget.Toolbar;
 
 import java.io.ByteArrayOutputStream;
 
@@ -27,11 +25,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        
+        // Toolbar setup
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         dbHelper = new DatabaseHelper(this);
 
@@ -60,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Bitmap signatureBitmap = signatureView.getBitmap();
+        if (signatureBitmap == null) {
+            Toast.makeText(this, "Error al capturar la firma", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        
         byte[] firmaBytes = bitmapToByteArray(signatureBitmap);
 
         long id = dbHelper.insertSignature(descripcion, firmaBytes);
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Firma guardada correctamente", Toast.LENGTH_SHORT).show();
             signatureView.clear();
             editDescripcion.setText("");
+            editDescripcion.clearFocus();
         } else {
             Toast.makeText(this, "Error al guardar la firma", Toast.LENGTH_SHORT).show();
         }

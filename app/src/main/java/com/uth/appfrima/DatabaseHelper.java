@@ -69,4 +69,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return signatures;
     }
+
+    public void deleteSignature(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_SIGNATURES, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
 }

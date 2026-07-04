@@ -23,7 +23,8 @@ public class SignatureView extends View {
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(5f);
+        paint.setStrokeCap(Paint.Cap.ROUND);
+        paint.setStrokeWidth(6f);
     }
 
     @Override
@@ -38,10 +39,13 @@ public class SignatureView extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                getParent().requestDisallowInterceptTouchEvent(true);
                 path.moveTo(x, y);
-                return true;
+                break;
             case MotionEvent.ACTION_MOVE:
                 path.lineTo(x, y);
+                break;
+            case MotionEvent.ACTION_UP:
                 break;
             default:
                 return false;
@@ -56,9 +60,11 @@ public class SignatureView extends View {
     }
 
     public Bitmap getBitmap() {
-        Bitmap bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        if (getWidth() <= 0 || getHeight() <= 0) return null;
+        Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        this.draw(canvas);
+        canvas.drawColor(Color.WHITE);
+        draw(canvas);
         return bitmap;
     }
 }

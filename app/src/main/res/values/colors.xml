@@ -2,4 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Pastel Green Palette -->
+    <color name="pastel_green_primary">#A8E6CF</color> <!-- Soft Mint -->
+    <color name="pastel_green_dark">#7BC0A3</color>
+    <color name="pastel_green_light">#DCEDC1</color>
+
+    <color name="pastel_yellow">#FFD3B6</color> <!-- Peach/Cream accent -->
+    <color name="pastel_red">#FF8B94</color>    <!-- Soft Coral for danger -->
+
+    <color name="background_soft">#F9FBFA</color>
+    <color name="surface_card">#FFFFFF</color>
+
+    <color name="text_main">#2D3436</color>
+    <color name="text_secondary">#636E72</color>
+
+    <!-- Material Mappings -->
+    <color name="primary">#7BC0A3</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="secondary">#A8E6CF</color>
+    <color name="onSecondary">#2D3436</color>
 </resources>
